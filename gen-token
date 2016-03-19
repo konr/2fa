@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -e
+
+token_file="/etc/tokens.json"
+service=$1
+
+set -o nounset
+
+if [ -z "$service" ]; then
+   cat $token_file | jq keys
+    exit 1;
+fi
+
+token=$(cat $token_file | jq -r .$service)
+
+if [[ "$token" == "null" ]]; then
+    echo "missing service \"$service\""
+    exit 1;
+fi
+
+oathtool --totp -b $token
