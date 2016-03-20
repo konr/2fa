@@ -1,6 +1,6 @@
 #!/bin/bash
 
-code=$(sudo -E docker run -v /etc/tokens.json:/etc/tokens.json 2fa:latest $*)
+code=$(sudo -E docker run -v /etc/tokens.json:/etc/tokens.json docker.io/konr/2fa:latest $*)
 
 echo $code
 echo $code | xclip -sel clip
